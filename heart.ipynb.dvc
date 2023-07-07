@@ -1,0 +1,5 @@
+outs:
+- md5: b63886d2eb930ec4ac8ef63f67485c69
+  size: 188151
+  hash: md5
+  path: heart.ipynb
