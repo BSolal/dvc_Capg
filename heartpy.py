@@ -184,7 +184,7 @@ mlflow.log_metric("R2", r2)
 mlflow.log_metric("precision", precision) #metric logging
 #mlflow.sklearn.log_model(model, "model") #model logging
 
-accuracy = 0.7
+accuracy = 0.8
 
 
 # In[10]:
