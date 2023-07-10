@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
 import pandas as pd
 import numpy as np
 import mlflow
@@ -224,6 +221,26 @@ mlflow.end_run()
     
 
     
+import json
+
+
+# Store metrics in a dictionary
+metrics = {
+    'RMSE': rmse,
+    'MAE': mae,
+    'R2': r2,
+    'precision':precision,
+    'recall':recall
+}
+
+# Save metrics as JSON
+with open('metrics.json', 'w') as file:
+    json.dump(metrics, file)
+
+# Close the file
+file.close()
+
+
 
 
 
