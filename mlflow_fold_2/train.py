@@ -89,7 +89,7 @@ if data is not None:
         
         # Specify the path of the folder you want to create
         folder_path = "C:/Users/sbittoun/Documents/main_fold/mlflow_fold_2/mlruns/models/RF"
-        folder_path2 = "C:/Users/sbittoun/Documents/main_fold/mlflow_fold2/mlruns/models/newModel"
+        folder_path2 = "C:/Users/sbittoun/Documents/main_fold/mlflow_fold_2/mlruns/models/newModel"
         # Check if the folder doesn't already exist
         if not os.path.exists(folder_path):
             # Create the folder
