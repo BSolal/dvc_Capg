@@ -13,13 +13,13 @@ stages:
       size: 6165
     params:
       params.yaml:
-        test_size: 0.3
+        test_size: 0.7
     outs:
     - path: modeli.pkl
       hash: md5
-      md5: e7d29e6ec9ca29c0fd2b7cdcb79d639a
-      size: 767864788
+      md5: f66d33e5bb6bf22fa82575f54849776e
+      size: 483943548
     - path: scores.json
       hash: md5
-      md5: ee03cad48a263fd8edf60c3bd04fc69e
-      size: 95
+      md5: d6d591835fbb62a3f0c93c71220eddb7
+      size: 93
