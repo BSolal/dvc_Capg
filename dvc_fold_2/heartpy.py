@@ -48,7 +48,7 @@ def read_data(file_path):
         print(f"Failed to read data from {file_path}: {str(e)}")
         return None
 
-excel_path = "C:/Users/sbittoun/Documents/main_fold/heart2.csv"
+excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
 data = pd.read_csv(excel_path)
 
 
