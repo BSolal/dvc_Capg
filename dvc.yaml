@@ -1,0 +1,13 @@
+stages:
+  NewStageMetrics:
+    cmd: python heartpy.py 
+    deps:
+    - heart2.csv
+    - heartpy.py
+    params:
+    - test_size
+    metrics:
+    - scores.json:
+        cache: false
+    outs:
+    - model.pkl
