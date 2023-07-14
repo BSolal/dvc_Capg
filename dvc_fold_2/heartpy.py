@@ -40,12 +40,6 @@ params_test_size = params['test_size']
 save_dvc_exp=True 
 
 
-# Start a new run within the experiment
-experiment = mlflow.set_experiment('NewExp')
-print('ID :', experiment.experiment_id, '\n\n')
-mlflow.start_run(run_name = 'run1', experiment_id =experiment.experiment_id)
-
-
 def read_data(file_path):
     try:
         data = pd.read_excel(file_path)
@@ -147,24 +141,6 @@ print("Recall: ", recall)
 ############################################### CONFUSION MATRIX, PRECISION, RECALL #############################################
 
 
-
-
-################################################ MLFLOW METRICS #######################################################
-
-
-#mlflow metrics
-mlflow.log_metric("RMSE", rmse)
-mlflow.log_metric("MAE", mae)
-mlflow.log_metric("R2", r2)
-mlflow.log_metric("precision", precision) #metric logging
-mlflow.log_param("test_size", params_test_size)
-#mlflow.sklearn.log_model(model, "model") #model logging
-################################################ MLFLOW METRICS #######################################################
-
-
-
-
-
 ################################################## PLOTS ####################################################################
 # Plot the actual values with a specific color
 plt.figure(figsize=(20, 6))
@@ -197,8 +173,6 @@ with Live() as live:
     live.log_metric("recall", recall)
     live.log_metric("precision", precision)
 ############################################## DVC LOG_METRICS #####################################################
-mlflow.end_run()
-
 with open('model.pkl', 'wb') as file:
     pickle.dump(model, file)
 
