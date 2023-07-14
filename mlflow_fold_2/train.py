@@ -48,7 +48,7 @@ else:
 
 # Set the active experiment
 mlflow.set_experiment(experiment_name)
-name_run = "run 6"
+name_run = "run4"
 mlflow.start_run(run_name = name_run, experiment_id =id_experiment)
 print("Running :",name_run,"in [",experiment_name,";",id_experiment,"]\n")
 
@@ -75,8 +75,8 @@ if data is not None:
 #######################################################################################################################
 ############################################ HEART DISEASEOR ATTACK PREDICTION #########################################
         
-        X = data.drop("HeartDiseaseorAttack", axis=1)  # Features
-        y = data["HeartDiseaseorAttack"]  # Target column
+        X = data.drop("Smoke", axis=1)  # Features
+        y = data["Smoke"]  # Target column
         params_test_size = 0.3
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
@@ -86,7 +86,7 @@ if data is not None:
         model.fit(train_X, train_y)
         predictions = model.predict(test_X)
         
-        
+        '''
         # Specify the path of the folder you want to create
         folder_path = "C:/Users/sbittoun/Documents/main_fold/mlflow_fold_2/mlruns/models/RF"
         folder_path2 = "C:/Users/sbittoun/Documents/main_fold/mlflow_fold_2/mlruns/models/newModel"
@@ -102,7 +102,7 @@ if data is not None:
             os.makedirs(folder_path2)
             print("Folder created successfully.")
             mlflow.sklearn.save_model(model, folder_path2)
-        
+        '''
         
         print(test_y, "\n\n")
         print(test_X,"\n\n")
