@@ -21,40 +21,15 @@ from sklearn.metrics import log_loss
 
 import matplotlib.pyplot as plt
 import seaborn as sns
-<<<<<<< HEAD
-
-=======
 from dvclive import Live
 import json
 import pickle
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 
 
 # Modelling
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
-<<<<<<< HEAD
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[2]:
-
-
-# Start a new run within the 
-
-mlflow.start_run()
-
-
-# In[3]:
-=======
 import dvc.api
 
 
@@ -69,7 +44,6 @@ save_dvc_exp=True
 experiment = mlflow.set_experiment('NewExp')
 print('ID :', experiment.experiment_id, '\n\n')
 mlflow.start_run(run_name = 'run1', experiment_id =experiment.experiment_id)
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 
 
 def read_data(file_path):
@@ -80,15 +54,7 @@ def read_data(file_path):
         print(f"Failed to read data from {file_path}: {str(e)}")
         return None
 
-
-<<<<<<< HEAD
-# In[4]:
-
-
-excel_path = "C:/Users/sbittoun/Downloads/heart2.csv"
-=======
-excel_path = "C:/Users/sbittoun/Documents/dvc_fold/heart2.csv"
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
+excel_path = "C:/Users/sbittoun/Documents/main_fold/heart2.csv"
 data = pd.read_csv(excel_path)
 
 
@@ -97,15 +63,6 @@ if data is not None:
         # Example: display the first few rows of the filtered data
         #print(data.head(5))
 
-<<<<<<< HEAD
-        X = data.drop("HeartDiseaseorAttack", axis=1)  # Features
-        y = data["HeartDiseaseorAttack"]  # Target column
-
-        train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=0.2, random_state=42)
-
-
-        # Créer et entraîner le modèle Random Forest
-=======
         
 ############################################ HEART DISEASEOR ATTACK PREDDICTION #########################################
         
@@ -116,7 +73,6 @@ if data is not None:
 
 
         # Random forest training
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
         model = RandomForestClassifier()        
         model.fit(train_X, train_y)
         predictions = model.predict(test_X)
@@ -125,11 +81,6 @@ if data is not None:
         rmse = mean_squared_error(test_y, predictions, squared=False)
         mae = mean_absolute_error(test_y, predictions)
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
         #print(train_y, "\n\n")
         print(test_y, "\n\n")
         print(test_X,"\n\n")
@@ -147,20 +98,11 @@ if data is not None:
         
 else:
     print("Failed to read data.")
-<<<<<<< HEAD
-
-
-# In[5]:
-
-
-############## COST AND LOSS FUNCTIONS #######################################################
-=======
     
 ############################################ HEART DISEASEOR ATTACK PREDICTION #########################################
 
 
 ######################################## COST AND LOSS FUNCTIONS #######################################################
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 
 # Calculer la fonction de coût (cost function) - log loss
 cost = log_loss(test_y, predictions, labels=np.unique(test_y))
@@ -171,30 +113,12 @@ loss = mean_absolute_error(test_y, predictions)
 # Afficher les valeurs de la fonction de coût et de la fonction de perte
 print("Cost function:", cost)
 print("Loss function:", loss)
-<<<<<<< HEAD
-
-
-# In[ ]:
-
-
-
-
-
-
-
-# In[6]:
-
-
-############################################### CONFUSION MATRIX, PRECISION, RECALL ####################################
-        # Create the confusion matrix
-=======
 ######################################## COST AND LOSS FUNCTIONS #######################################################
 
 
 
 ############################################### CONFUSION MATRIX, PRECISION, RECALL ###########################################
 # Create the confusion matrix
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 cm = confusion_matrix(test_y, predictions)
 
 # Inversion des positions des classes dans la matrice de confusion
@@ -203,11 +127,6 @@ inv_con = cm[::-1, ::-1]
 # Convert the confusion matrix to a DataFrame for easier visualization
 cm_df = pd.DataFrame(inv_con, index=['Actual Class 1', 'Actual Class 0'], columns=['Predicted Class 1', 'Predicted Class 0'])
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 # Display the confusion matrix as a heatmap
 plt.figure(figsize=(8, 6))
 sns.heatmap(cm_df, annot=True, fmt='d', cmap='Blues')
@@ -215,13 +134,6 @@ plt.title('Confusion Matrix')
 plt.xlabel('Predicted Class')
 plt.ylabel('Actual Class')
 
-<<<<<<< HEAD
-'''
-Precision = 45461 / (45461 + 4137) = 0.9165 (approximately)
-Recall = 45461 / (45461 + 507) = 0.989 (approximately)
-'''
-=======
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 
 # Calculate precision
 precision = precision_score(test_y, predictions)
@@ -232,16 +144,9 @@ recall = recall_score(test_y, predictions)
 print("Precision: ", precision)
 print("Recall: ", recall)
 
-<<<<<<< HEAD
-##############################################################################################################################
-
-
-# In[7]:
-=======
 ############################################### CONFUSION MATRIX, PRECISION, RECALL #############################################
 
 
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 
 
 ################################################ MLFLOW METRICS #######################################################
@@ -252,21 +157,12 @@ mlflow.log_metric("RMSE", rmse)
 mlflow.log_metric("MAE", mae)
 mlflow.log_metric("R2", r2)
 mlflow.log_metric("precision", precision) #metric logging
-<<<<<<< HEAD
-#mlflow.sklearn.log_model(model, "model") #model logging
-
-accuracy = 0.8
-
-
-# In[10]:
-=======
 mlflow.log_param("test_size", params_test_size)
 #mlflow.sklearn.log_model(model, "model") #model logging
 ################################################ MLFLOW METRICS #######################################################
 
 
 
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18
 
 
 ################################################## PLOTS ####################################################################
@@ -288,80 +184,6 @@ end_index = 2500
 
 # Limit the x-axis to the specified portion
 plt.xlim(start_index, end_index)
-<<<<<<< HEAD
-
-plt.show()
-
-
-##############################################################################################################################
-
-
-# In[9]:
-
-
-mlflow.end_run()
-    
-
-    
-import json
-
-
-# Store metrics in a dictionary
-metrics = {
-    'RMSE': rmse,
-    'MAE': mae,
-    'R2': r2,
-    'precision':precision,
-    'recall':recall
-}
-
-# Save metrics as JSON
-with open('metrics.json', 'w') as file:
-    json.dump(metrics, file)
-
-# Close the file
-file.close()
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-=======
 plt.show()
 
 ##############################################################################################################################
@@ -383,4 +205,3 @@ with open('model.pkl', 'wb') as file:
 scores = {'recall': recall}
 with open ('scores.json', 'w')as file:
     json.dump(scores, file)
->>>>>>> 7a228883f294ca258e3c638f67f2cf75207d3f18

@@ -64,7 +64,7 @@ def read_data(file_path):
         print(f"Failed to read data from {file_path}: {str(e)}")
 
 
-excel_path = "C:/Users/sbittoun/Documents/dvc_fold/heart2.csv"
+excel_path = "C:/Users/sbittoun/Documents/main_fold/heart2.csv"
 data = pd.read_csv(excel_path)
 
 if data is not None:
@@ -88,8 +88,8 @@ if data is not None:
         
         
         # Specify the path of the folder you want to create
-        folder_path = "C:/Users/sbittoun/Documents/dvc_fold/mlflow_fold/mlruns/models/RF"
-        folder_path2 = "C:/Users/sbittoun/Documents/dvc_fold/mlflow_fold/mlruns/models/newModel"
+        folder_path = "C:/Users/sbittoun/Documents/main_fold/mlflow_fold_2/mlruns/models/RF"
+        folder_path2 = "C:/Users/sbittoun/Documents/main_fold/mlflow_fold2/mlruns/models/newModel"
         # Check if the folder doesn't already exist
         if not os.path.exists(folder_path):
             # Create the folder
