@@ -1,0 +1,25 @@
+schema: '2.0'
+stages:
+  NewStageMetrics:
+    cmd: python heartpy.py
+    deps:
+    - path: heart2.csv
+      hash: md5
+      md5: 7fd5d1ceb7867cd35c1a4d9da7e7d890
+      size: 47319011
+    - path: heartpy.py
+      hash: md5
+      md5: c2709c157ff1c395a31412690b651162
+      size: 6296
+    params:
+      params.yaml:
+        test_size: 0.3
+    outs:
+    - path: model.pkl
+      hash: md5
+      md5: 7c55f0884b096aac01f19b7855f65bf8
+      size: 767949268
+    - path: scores.json
+      hash: md5
+      md5: 53284e62e788b342a0fbd81ac5cdf8b1
+      size: 30
