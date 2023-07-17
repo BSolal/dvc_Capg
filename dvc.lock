@@ -17,9 +17,9 @@ stages:
     outs:
     - path: modeli.pkl
       hash: md5
-      md5: 7ead3b63a7bc86865eeb15929b3a516e
-      size: 816289588
+      md5: e9c630bb84b2043e2ba6cfbe7ffa65ff
+      size: 81744068
     - path: scores.json
       hash: md5
-      md5: 7c96d663b257a7bdf6f8df2c8cba4d9d
+      md5: 4ec61002e1029dd7a7d4972ada06cabc
       size: 95
