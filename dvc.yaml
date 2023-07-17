@@ -4,8 +4,10 @@ stages:
     deps:
     - heart2.csv
     - heartpy.py
+    - params.yaml
     params:
     - test_size
+    - n_estimators
     metrics:
     - scores.json:
         cache: false
