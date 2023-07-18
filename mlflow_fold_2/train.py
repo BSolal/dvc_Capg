@@ -23,17 +23,17 @@ from dvclive import Live
 #import json
 #import pickle
 
-
 # Modelling
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
 #import dvc.api
 
-#######################################################################################################################
+######################################################################################################################
 ################################# MLFLOW STARTING PARAMETERS #########################################################
+
 # Experiment name
-experiment_name = "Heart_diseases"
+experiment_name = "Heart Diseasor"
 experiment = mlflow.get_experiment_by_name(experiment_name)
 print("\n",experiment_name)
 
@@ -48,14 +48,12 @@ else:
 
 # Set the active experiment
 mlflow.set_experiment(experiment_name)
-name_run = "run4"
+name_run = "essai 18/07"
 mlflow.start_run(run_name = name_run, experiment_id =id_experiment)
 print("Running :",name_run,"in [",experiment_name,";",id_experiment,"]\n")
 
 ################################# MLFLOW STARTING PARAMETERS ##########################################################
 #######################################################################################################################
-
-
 def read_data(file_path):
     try:
         data = pd.read_excel(file_path)
@@ -73,16 +71,19 @@ if data is not None:
         #print(data.head(5))
 
 #######################################################################################################################
-############################################ HEART DISEASEOR ATTACK PREDICTION #########################################
+############################################ HEART DISEASEOR ATTACK PREDICTION ########################################
         
-        X = data.drop("Smoke", axis=1)  # Features
-        y = data["Smoke"]  # Target column
+        X = data.drop("HeartDiseaseorAttack", axis=1)  # Features
+        y = data["HeartDiseaseorAttack"]  # Target column
         params_test_size = 0.3
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
-
         # Random forest training
-        model = RandomForestClassifier()        
+
+        
+        #The number of trees in the forest.
+        estims = 25
+        model = RandomForestClassifier(n_estimators = estims)        
         model.fit(train_X, train_y)
         predictions = model.predict(test_X)
         
@@ -111,13 +112,13 @@ if data is not None:
 else:
     print("Failed to read data.")
     
-############################################ HEART DISEASEOR ATTACK PREDICTION #########################################
+
+############################################ HEART DISEASEOR ATTACK PREDICTION ########################################
 #######################################################################################################################
 
 
-
 #######################################################################################################################
-######################################## COST AND LOSS FUNCTIONS #######################################################
+######################################## COST AND LOSS FUNCTIONS ######################################################
 
 # (cost function) - log loss
 cost = log_loss(test_y, predictions, labels=np.unique(test_y))
@@ -128,15 +129,13 @@ loss = mean_absolute_error(test_y, predictions)
 # Afficher les valeurs de la fonction de coût et de la fonction de perte
 print("Cost function:", cost)
 print("Loss function:", loss)
-######################################## COST AND LOSS FUNCTIONS #######################################################
+######################################## COST AND LOSS FUNCTIONS ######################################################
 #######################################################################################################################
 
 
 
-
-
 #######################################################################################################################
-############################################### CONFUSION MATRIX, PRECISION, RECALL ###########################################
+#################################### CONFUSION MATRIX, PRECISION, RECALL ##############################################
 # Create the confusion matrix
 cm = confusion_matrix(test_y, predictions)
 inv_con = cm[::-1, ::-1]
@@ -165,9 +164,8 @@ print("Precision: ", precision)
 print("Recall: ", recall)
 print("Accuracy", accuracy)
 
-############################################### CONFUSION MATRIX, PRECISION, RECALL #############################################
+###################################### CONFUSION MATRIX, PRECISION, RECALL ############################################
 #######################################################################################################################
-
 
 
 #######################################################################################################################
@@ -177,14 +175,15 @@ mlflow.log_metric("precision", precision) #metric logging
 mlflow.log_metric("recall", recall) #metric logging
 mlflow.log_metric("accuracy", accuracy)
 mlflow.log_param("test_size", params_test_size)
+mlflow.log_param("n_estimators", estims)
 #mlflow.sklearn.log_model(model, "model") #model logging
+
 ################################################ MLFLOW METRICS #######################################################
 #######################################################################################################################
 
 
-
 #######################################################################################################################
-################################################## PLOTS ####################################################################
+################################################## PLOTS ##############################################################
 # Plot the actual values with a specific color
 plt.figure(figsize=(20, 6))
 sns.scatterplot(x=test_y.index, y=test_y, color='blue', label='Actual')

@@ -36,6 +36,7 @@ import dvc.api
 ####################################################### DVC PARAMS #############################################################
 params = dvc.api.params_show()
 params_test_size = params['test_size']
+params_n_estimators = params ['n_estimators']
 ####################################################### DVC PARAMS #############################################################
 save_dvc_exp=True 
 
@@ -67,7 +68,7 @@ if data is not None:
 
 
         # Random forest training
-        model = RandomForestClassifier()        
+        model = RandomForestClassifier(n_estimators=params_n_estimators)        
         model.fit(train_X, train_y)
         predictions = model.predict(test_X)
 
@@ -79,16 +80,6 @@ if data is not None:
         print(test_y, "\n\n")
         print(test_X,"\n\n")
         print(predictions,"\n\n")
-        
-        
-        # should be close to 1
-        print("r2: ", r2, "\n")
-
-        # should be close to 0
-        print("mae: ", mae, "\n")
-
-        # should be close to 0
-        print("rmse: ", rmse, "\n")
         
 else:
     print("Failed to read data.")
@@ -135,8 +126,12 @@ precision = precision_score(test_y, predictions)
 # Calculate recall
 recall = recall_score(test_y, predictions)
 
+# Calculate accuracy
+accuracy = accuracy_score(test_y, predictions)
+
 print("Precision: ", precision)
 print("Recall: ", recall)
+print("Accuracy: ", accuracy)
 
 ############################################### CONFUSION MATRIX, PRECISION, RECALL #############################################
 
@@ -167,15 +162,14 @@ plt.show()
 
 ############################################## DVC LOG_METRICS #####################################################
 with Live() as live:
-    live.log_metric("rmse", rmse)
-    live.log_metric("mae", mae)
-    live.log_metric("r2", r2)
     live.log_metric("recall", recall)
     live.log_metric("precision", precision)
+    live.log_metric("accuracy", accuracy)
+
 ############################################## DVC LOG_METRICS #####################################################
-with open('model.pkl', 'wb') as file:
+with open('modeli.pkl', 'wb') as file:
     pickle.dump(model, file)
 
-scores = {'recall': recall}
+scores = {'recall': recall, 'precision':precision, "accuracy":accuracy}
 with open ('scores.json', 'w')as file:
     json.dump(scores, file)
