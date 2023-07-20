@@ -3,12 +3,10 @@ import numpy as np
 import mlflow
 import mlflow.sklearn
 import os
-
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import PolynomialFeatures
-
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
@@ -16,24 +14,28 @@ from sklearn.metrics import r2_score
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import log_loss
-
 import matplotlib.pyplot as plt
 import seaborn as sns
 from dvclive import Live
-#import json
-#import pickle
-
 # Modelling
 from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
-#import dvc.api
+import yaml
+
+with open('mlproject.yaml', 'r') as stream:
+    try:
+        mlproject_config = yaml.safe_load(stream)
+    except yaml.YAMLError as e:
+        print(e)
+
+
 
 ######################################################################################################################
 ################################# MLFLOW STARTING PARAMETERS #########################################################
 
 # Experiment name
-experiment_name = "Heart Diseasor"
+experiment_name =  mlproject_config['entry_points']['main']['parameters']['experiment_name']['default']
 experiment = mlflow.get_experiment_by_name(experiment_name)
 print("\n",experiment_name)
 
@@ -48,7 +50,7 @@ else:
 
 # Set the active experiment
 mlflow.set_experiment(experiment_name)
-name_run = "essai 18/07"
+name_run =  mlproject_config['entry_points']['main']['parameters']['run_name']['default']
 mlflow.start_run(run_name = name_run, experiment_id =id_experiment)
 print("Running :",name_run,"in [",experiment_name,";",id_experiment,"]\n")
 
@@ -62,7 +64,7 @@ def read_data(file_path):
         print(f"Failed to read data from {file_path}: {str(e)}")
 
 
-excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
+excel_path =  mlproject_config['entry_points']['main']['parameters']['data_path']['default']
 data = pd.read_csv(excel_path)
 
 if data is not None:
@@ -72,17 +74,17 @@ if data is not None:
 
 #######################################################################################################################
 ############################################ HEART DISEASEOR ATTACK PREDICTION ########################################
-        
-        X = data.drop("HeartDiseaseorAttack", axis=1)  # Features
-        y = data["HeartDiseaseorAttack"]  # Target column
-        params_test_size = 0.3
+        target_name =  mlproject_config['entry_points']['main']['parameters']['target']['default']
+        X = data.drop(target_name, axis=1)  # Features
+        y = data[target_name]  # Target column
+        params_test_size =  mlproject_config['entry_points']['main']['parameters']['test_size']['default']
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
         # Random forest training
 
         
         #The number of trees in the forest.
-        estims = 25
+        estims =  mlproject_config['entry_points']['main']['parameters']['n_estimators']['default']
         model = RandomForestClassifier(n_estimators = estims)        
         model.fit(train_X, train_y)
         predictions = model.predict(test_X)
@@ -162,7 +164,7 @@ accuracy = accuracy_score(test_y, predictions)
 
 print("Precision: ", precision)
 print("Recall: ", recall)
-print("Accuracy", accuracy)
+print("Accuracy", accuracy,"\n")
 
 ###################################### CONFUSION MATRIX, PRECISION, RECALL ############################################
 #######################################################################################################################
@@ -176,6 +178,7 @@ mlflow.log_metric("recall", recall) #metric logging
 mlflow.log_metric("accuracy", accuracy)
 mlflow.log_param("test_size", params_test_size)
 mlflow.log_param("n_estimators", estims)
+mlflow.log_param("target",target_name)
 #mlflow.sklearn.log_model(model, "model") #model logging
 
 ################################################ MLFLOW METRICS #######################################################
