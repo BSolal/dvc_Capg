@@ -22,6 +22,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, r
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
 import yaml
+import time
 
 with open('mlproject.yaml', 'r') as stream:
     try:
@@ -37,7 +38,7 @@ with open('mlproject.yaml', 'r') as stream:
 # Experiment name
 experiment_name =  mlproject_config['entry_points']['main']['parameters']['experiment_name']['default']
 experiment = mlflow.get_experiment_by_name(experiment_name)
-print("\n",experiment_name)
+print(experiment_name)
 
 if experiment is None:
     # Create a new experiment if it doesn't exist
@@ -80,9 +81,15 @@ if data is not None:
         params_test_size =  mlproject_config['entry_points']['main']['parameters']['test_size']['default']
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
-        # Random forest training
+
+
+        start_time = time.time()
+        print('\n######## Timer starts #########')
 
         
+
+        # Random forest training
+
         #The number of trees in the forest.
         estims =  mlproject_config['entry_points']['main']['parameters']['n_estimators']['default']
         model = RandomForestClassifier(n_estimators = estims)        
@@ -170,12 +177,18 @@ print("Accuracy", accuracy,"\n")
 #######################################################################################################################
 
 
+end_time = time.time()
+# Execution time in seconds
+execution_time = end_time - start_time
+print("Execution time:", execution_time, "seconds")
+
 #######################################################################################################################
 ################################################ MLFLOW METRICS #######################################################
 
 mlflow.log_metric("precision", precision) #metric logging
 mlflow.log_metric("recall", recall) #metric logging
 mlflow.log_metric("accuracy", accuracy)
+mlflow.log_metric("time", execution_time)
 mlflow.log_param("test_size", params_test_size)
 mlflow.log_param("n_estimators", estims)
 mlflow.log_param("target",target_name)
@@ -183,6 +196,11 @@ mlflow.log_param("target",target_name)
 
 ################################################ MLFLOW METRICS #######################################################
 #######################################################################################################################
+
+
+
+
+
 
 
 #######################################################################################################################
