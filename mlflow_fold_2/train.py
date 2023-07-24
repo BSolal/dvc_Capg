@@ -27,7 +27,7 @@ import mlflow.pyfunc
 
 
 def main():
-    with open('mlproject.yaml', 'r') as stream:
+    with open('MLproject', 'r') as stream:
         try:
             mlproject_config = yaml.safe_load(stream)
         except yaml.YAMLError as e:
@@ -161,6 +161,8 @@ def main():
     plt.title('Confusion Matrix')
     plt.xlabel('Predicted Class')
     plt.ylabel('Actual Class')
+    plt.savefig("confusion_matrix.png")
+    mlflow.log_artifact("confusion_matrix.png")
 
 
     # Calculate precision
@@ -215,6 +217,8 @@ def main():
 
     plt.title('Result Curve')
     plt.legend()
+    plt.savefig("result_curve.png")
+    mlflow.log_artifact("result_curve.png")
 
     # Specify the start and end indices for the portion to display
     start_index = 0
