@@ -11,9 +11,3 @@ entry_points:
       run_name: {type: string, default: 'run 17'}
       
     command: python train.py
-
-
-
-
-
-
