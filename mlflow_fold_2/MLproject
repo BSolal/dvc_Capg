@@ -1,5 +1,5 @@
 name: mlflow_project_2
-#conda_env: conda.yaml
+conda_env: conda.yaml
 entry_points:
   main:
     parameters:
@@ -9,4 +9,4 @@ entry_points:
       target: {type: string, default: 'HeartDiseaseorAttack'}
       experiment_name: {type: string, default: 'Heart_with_time'}
       run_name: {type: string, default: 'essai_model_12'}
-    command: "python train.py {experiment_name}"
+    command: "python train.py {data_path} {n_estimators} {test_size} {target} {experiment_name} {run_name}"
