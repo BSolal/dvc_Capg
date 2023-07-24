@@ -9,6 +9,7 @@ entry_points:
       target: {type: string, default: 'HeartDiseaseorAttack'}
       experiment_name: {type: string, default: 'Heart_with_time'}
       run_name: {type: string, default: 'run 17'}
+      
     command: python train.py
 
 
