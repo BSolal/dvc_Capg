@@ -1,4 +1,4 @@
-name: mlflow_project_1
+name: mlflow_project_2
 conda_env: test.yaml
 entry_points:
   main:
