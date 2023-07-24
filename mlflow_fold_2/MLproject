@@ -1,13 +1,13 @@
 name: mlflow_project_1
-conda_env: conda.yaml
+conda_env: test.yaml
 entry_points:
   main:
     parameters:
       data_path: {type: string, default: 'C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv'}
-      n_estimators: {type: int, default: 10}
+      n_estimators: {type: int, default: 2}
       test_size: {type: float, default: 0.3}
       target: {type: string, default: 'HeartDiseaseorAttack'}
       experiment_name: {type: string, default: 'Heart_with_time'}
-      run_name: {type: string, default: 'run 17'}
+      run_name: {type: string, default: 'essai_model_12'}
       
     command: python train.py

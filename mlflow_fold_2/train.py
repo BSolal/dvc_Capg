@@ -23,6 +23,8 @@ from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
 import yaml
 import time
+import mlflow.pyfunc
+
 
 def main():
     with open('mlproject.yaml', 'r') as stream:
@@ -200,10 +202,6 @@ def main():
 
 
 
-
-
-
-
     #######################################################################################################################
     ################################################## PLOTS ##############################################################
     # Plot the actual values with a specific color
@@ -229,6 +227,8 @@ def main():
     #######################################################################################################################
     #######################################################################################################################
 
+
+    mlflow.sklearn.log_model(model, "random_forest_model")
     mlflow.end_run()
 
 
