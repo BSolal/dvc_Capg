@@ -10,4 +10,4 @@ entry_points:
       experiment_name: {type: string, default: 'Heart_with_time'}
       run_name: {type: string, default: 'essai_model_12'}
       
-    command: python train.py
+    command: 'python train.py'
