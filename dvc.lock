@@ -5,8 +5,8 @@ stages:
     deps:
     - path: heart2.csv
       hash: md5
-      md5: dc6247f90b239d05cca5cee9cb876f06
-      size: 47319059
+      md5: 7fd5d1ceb7867cd35c1a4d9da7e7d890
+      size: 47319011
     - path: heartpy.py
       hash: md5
       md5: 424f27dbe5e42b8f1fab13baa900af60
@@ -22,9 +22,9 @@ stages:
     outs:
     - path: modeli.pkl
       hash: md5
-      md5: 04942218ea9f456517d3c1a0f18118d0
-      size: 76689668
+      md5: 6fe25f347bbeaa63e10f03c810b7601f
+      size: 76651268
     - path: scores.json
       hash: md5
-      md5: 1cf35ed6ecb2ad095782cc1aca20314c
-      size: 94
+      md5: d2acb7b90bfba3fa92eb6b669f86afc5
+      size: 95
