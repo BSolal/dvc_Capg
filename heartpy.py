@@ -5,7 +5,6 @@ import pandas as pd
 import numpy as np
 import mlflow
 import mlflow.sklearn
-import csv
 
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import LinearRegression
@@ -163,7 +162,7 @@ end_index = 2500
 
 # Limit the x-axis to the specified portion
 plt.xlim(start_index, end_index)
-#plt.show()
+plt.show()
 
 ##############################################################################################################################
 
@@ -178,24 +177,6 @@ with Live() as live:
 with open('modeli.pkl', 'wb') as file:
     pickle.dump(model, file)
 
-scores = {"accuracy":accuracy,'recall': recall, 'precision':precision, 'n_estims':params_n_estim}
+scores = {"accuracy":accuracy,'recall': recall, 'precision':precision}
 with open ('scores.json', 'w')as file:
     json.dump(scores, file)
-
-# Scores de chaque époque
-scores = [{"n_estimators": params_n_estim, "precision": precision, "recall": recall, "accuracy": accuracy}]
-
-# Ouvrir le fichier en mode 'a' pour ajouter les scores à la fin
-with open('scores.csv', 'a', newline='') as file:
-    # Créer un writer pour écrire dans le fichier CSV
-    writer = csv.DictWriter(file, fieldnames=["n_estimators", "precision", "recall", "accuracy"])
-
-    # Vérifier si le fichier est vide, si c'est le cas, écrire les en-têtes
-    file.seek(0, 2)
-    if file.tell() == 0:
-        writer.writeheader()
-
-    # Écrire les scores dans le fichier
-    writer.writerows(scores)
-
-

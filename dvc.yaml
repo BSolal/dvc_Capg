@@ -11,9 +11,5 @@ stages:
     metrics:
     - scores.json:
         cache: false
-    plots:
-    - scores.csv:
-        x: n_estimators
-        y: precision  
     outs:
     - modeli.pkl
