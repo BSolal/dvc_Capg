@@ -16,8 +16,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import r2_score
-from sklearn.metrics import confusion_matrix
-from sklearn.metrics import precision_score, recall_score
 from sklearn.metrics import log_loss
 
 import matplotlib.pyplot as plt
@@ -29,7 +27,7 @@ import json
 
 
 # Modelling
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay, f1_score, roc_curve, roc_auc_score, auc
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
 import dvc.api
@@ -60,12 +58,12 @@ data = pd.read_csv(excel_path)
 if data is not None:
         print("Data read successfully.")
         # Example: display the first few rows of the filtered data
-        print(data.head(5))
+        #print(data.head(5))
         
 ############################################ HEART DISEASEOR ATTACK PREDDICTION #########################################
         
-        X = data.drop("HeartDiseaseorAttack", axis=1)  # Features
-        y = data["HeartDiseaseorAttack"]  # Target column
+        X = data.drop("Stroke", axis=1)  # Features
+        y = data["Stroke"]  # Target column
 
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
@@ -74,12 +72,6 @@ if data is not None:
         model = RandomForestClassifier(n_estimators=params_n_estim)        
         model.fit(train_X, train_y)
         predictions = model.predict(test_X)
-
-        r2 = r2_score(test_y, predictions)
-        rmse = mean_squared_error(test_y, predictions, squared=False)
-        mae = mean_absolute_error(test_y, predictions)
-
-
 
         #print(train_y, "\n\n")
         print(test_y, "\n\n")
@@ -125,7 +117,6 @@ plt.title('Confusion Matrix')
 plt.xlabel('Predicted Class')
 plt.ylabel('Actual Class')
 
-
 # Calculate precision
 precision = precision_score(test_y, predictions)
 
@@ -135,9 +126,18 @@ recall = recall_score(test_y, predictions)
 #Calculate Accuracy
 accuracy = accuracy_score(test_y, predictions)
 
+#Calculate f1_score
+f1 = f1_score(test_y,predictions)
+
+#Calculate ROC_AUC
+roc_auc = roc_auc_score(test_y, predictions)
+
 print("Precision: ", precision)
 print("Recall: ", recall)
 print("Accuracy", accuracy)
+print("F1", f1)
+print("ROC_AUC",roc_auc )
+
 
 ############################################### CONFUSION MATRIX, PRECISION, RECALL #############################################
 
@@ -163,7 +163,7 @@ end_index = 2500
 
 # Limit the x-axis to the specified portion
 plt.xlim(start_index, end_index)
-#plt.show()
+plt.show()
 
 ##############################################################################################################################
 
@@ -173,23 +173,25 @@ with Live() as live:
     live.log_metric("recall", recall)
     live.log_metric("precision", precision)
     live.log_metric("accuracy", accuracy)
+    live.log_metric("f1_score", f1)
+    live.log_metric("roc_auc", roc_auc)
 ############################################## DVC LOG_METRICS #####################################################
 
 
 ########################################### SAVE METRICS ##############################################################
 ##############################################################################################################################
 
-scores = {"accuracy":accuracy,'recall': recall, 'precision':precision, 'n_estims':params_n_estim}
+scores = {"accuracy":accuracy,'recall': recall, 'precision':precision, 'f1':f1, 'roc_auc':roc_auc,'n_estims':params_n_estim}
 with open ('scores.json', 'w')as file:
     json.dump(scores, file)
 
-# Scores de chaque époque
-scores = [{"n_estimators": params_n_estim, "precision": precision, "recall": recall, "accuracy": accuracy}]
+# Scores de chaque 
+scores = [{"n_estimators": params_n_estim, "precision": precision, "recall": recall, "accuracy": accuracy,'f1':f1, 'roc_auc':roc_auc}]
 
 # Ouvrir le fichier en mode 'a' pour ajouter les scores à la fin
 with open('scores.csv', 'a', newline='') as file:
     # Créer un writer pour écrire dans le fichier CSV
-    writer = csv.DictWriter(file, fieldnames=["n_estimators", "precision", "recall", "accuracy"])
+    writer = csv.DictWriter(file, fieldnames=["n_estimators", "precision", "recall", "accuracy","f1_score","roc_auc"])
 
     # Vérifier si le fichier est vide, si c'est le cas, écrire les en-têtes
     file.seek(0, 2)
@@ -202,7 +204,7 @@ with open('scores.csv', 'a', newline='') as file:
 ##############################################################################################################################
 
 ################################################ MODEL ##########################################################
-##############################################################################################################################
+#################################################################################################################
 
 
 with open('modeli.pkl', 'wb') as file:
@@ -212,8 +214,12 @@ with open('modeli.pkl', 'wb') as file:
 with open('modeli.pkl', 'rb') as file:
     loaded_model = pickle.load(file)
 
+#################################### PREDICTIONS WITH ANOTHER MODEL ############################################
+################################################################################################################
 
-new_excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart3.csv"
+'''
+
+new_excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
 new_data = pd.read_csv(new_excel_path)
 if new_data is not None:
         print("Data read successfully.")
@@ -221,3 +227,4 @@ if new_data is not None:
         print(new_data.head(5))
 
 new_predictions = loaded_model.predict(new_data)
+'''
