@@ -42,7 +42,7 @@ params_n_estim = params['n_estimators']
 ####################################################### DVC PARAMS #############################################################
 save_dvc_exp=True 
 
-
+'''
 def read_data(file_path):
     try:
         data = pd.read_excel(file_path)
@@ -50,6 +50,7 @@ def read_data(file_path):
     except Exception as e:
         print(f"Failed to read data from {file_path}: {str(e)}")
         return None
+'''
 
 
 excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
@@ -59,8 +60,7 @@ data = pd.read_csv(excel_path)
 if data is not None:
         print("Data read successfully.")
         # Example: display the first few rows of the filtered data
-        #print(data.head(5))
-
+        print(data.head(5))
         
 ############################################ HEART DISEASEOR ATTACK PREDDICTION #########################################
         
@@ -212,7 +212,12 @@ with open('modeli.pkl', 'wb') as file:
 with open('modeli.pkl', 'rb') as file:
     loaded_model = pickle.load(file)
 
-new_excel_path = "C:/Users/sbittoun/Documents/main_fold/heart3.csv"
-new_data = pd.read_csv(new_excel_path)
-new_predictions = loaded_model.predict(new_data)
 
+new_excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart3.csv"
+new_data = pd.read_csv(new_excel_path)
+if new_data is not None:
+        print("Data read successfully.")
+        # Example: display the first few rows of the filtered data
+        print(new_data.head(5))
+
+new_predictions = loaded_model.predict(new_data)
