@@ -8,6 +8,10 @@ stages:
     params:
     - test_size
     - n_estimators
+    plots:
+    - scores.csv:
+        x: n_estimators
+        y: recall
     metrics:
     - scores.json:
         cache: false

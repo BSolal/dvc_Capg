@@ -175,8 +175,9 @@ with Live() as live:
     live.log_metric("accuracy", accuracy)
 ############################################## DVC LOG_METRICS #####################################################
 
-with open('modeli.pkl', 'wb') as file:
-    pickle.dump(model, file)
+
+########################################### SAVE METRICS ##############################################################
+##############################################################################################################################
 
 scores = {"accuracy":accuracy,'recall': recall, 'precision':precision, 'n_estims':params_n_estim}
 with open ('scores.json', 'w')as file:
@@ -197,4 +198,21 @@ with open('scores.csv', 'a', newline='') as file:
 
     # Écrire les scores dans le fichier
     writer.writerows(scores)
+##############################################################################################################################
+##############################################################################################################################
+
+################################################ MODEL ##########################################################
+##############################################################################################################################
+
+
+with open('modeli.pkl', 'wb') as file:
+    pickle.dump(model, file)
+
+# Load the model from the file
+with open('modeli.pkl', 'rb') as file:
+    loaded_model = pickle.load(file)
+
+new_excel_path = "C:/Users/sbittoun/Documents/main_fold/heart3.csv"
+new_data = pd.read_csv(new_excel_path)
+new_predictions = loaded_model.predict(new_data)
 
