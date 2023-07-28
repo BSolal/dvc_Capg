@@ -51,7 +51,7 @@ def read_data(file_path):
 '''
 
 
-excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
+excel_path = "C:/Users/sbittoun/Documents/main_fold/creditcard.csv"
 data = pd.read_csv(excel_path)
 
 
@@ -62,8 +62,8 @@ if data is not None:
         
 ############################################ HEART DISEASEOR ATTACK PREDDICTION #########################################
         
-        X = data.drop("Stroke", axis=1)  # Features
-        y = data["Stroke"]  # Target column
+        X = data.drop("class", axis=1)  # Features
+        y = data["class"]  # Target column
 
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
@@ -181,12 +181,12 @@ with Live() as live:
 ########################################### SAVE METRICS ##############################################################
 ##############################################################################################################################
 
-scores = {"accuracy":accuracy,'recall': recall, 'precision':precision, 'f1':f1, 'roc_auc':roc_auc,'n_estims':params_n_estim}
+scores = {"accuracy":accuracy,'recall': recall, 'precision':precision, 'f1_score':f1, 'roc_auc':roc_auc,'n_estims':params_n_estim}
 with open ('scores.json', 'w')as file:
     json.dump(scores, file)
 
 # Scores de chaque 
-scores = [{"n_estimators": params_n_estim, "precision": precision, "recall": recall, "accuracy": accuracy,'f1':f1, 'roc_auc':roc_auc}]
+scores = [{"n_estimators": params_n_estim, "precision": precision, "recall": recall, "accuracy": accuracy,"f1_score":f1, "roc_auc":roc_auc}]
 
 # Ouvrir le fichier en mode 'a' pour ajouter les scores à la fin
 with open('scores.csv', 'a', newline='') as file:
