@@ -9,26 +9,26 @@ stages:
       size: 47319011
     - path: heartpy.py
       hash: md5
-      md5: 8543c97e9b491429b8ed356a3200a1cf
-      size: 8465
+      md5: b0c3384b6f013b3d17b6a757d9a1edc5
+      size: 8439
     - path: params.yaml
       hash: md5
-      md5: 37fbd22318e6a2f46b381e70184741f1
-      size: 31
+      md5: 95feee96ef177be5bf05d2dde8733d7c
+      size: 32
     params:
       params.yaml:
-        n_estimators: 5
+        n_estimators: 20
         test_size: 0.3
     outs:
     - path: modeli.pkl
       hash: md5
-      md5: 03d4cedc550b603a037512c255849b60
-      size: 38519628
+      md5: ce74b801ff4ec2d6792e9411fe18db9b
+      size: 153617748
     - path: scores.csv
       hash: md5
-      md5: c51e83ab34691806231c8ce01b7f5029
-      size: 154
+      md5: 7ce2d65af7a98b0371f146c94960e16a
+      size: 156
     - path: scores.json
       hash: md5
-      md5: b1f197d2f2269134d5329106c05de25b
-      size: 172
+      md5: 630d359d770d3a3e3951d66a51501c03
+      size: 174
