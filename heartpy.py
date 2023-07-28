@@ -163,7 +163,7 @@ end_index = 2500
 
 # Limit the x-axis to the specified portion
 plt.xlim(start_index, end_index)
-plt.show()
+#plt.show()
 
 ##############################################################################################################################
 
