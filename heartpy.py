@@ -51,7 +51,7 @@ def read_data(file_path):
 '''
 
 
-excel_path = "C:/Users/sbittoun/Documents/main_fold/creditcard.csv"
+excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
 data = pd.read_csv(excel_path)
 
 
@@ -60,10 +60,10 @@ if data is not None:
         # Example: display the first few rows of the filtered data
         #print(data.head(5))
         
-############################################ HEART DISEASEOR ATTACK PREDDICTION #########################################
+############################################ heart disease or ATTACK PREDICTION #########################################
         
-        X = data.drop("class", axis=1)  # Features
-        y = data["class"]  # Target column
+        X = data.drop("HeartDiseaseorAttack", axis=1)  # Features
+        y = data["HeartDiseaseorAttack"]  # Target column
 
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
@@ -82,7 +82,7 @@ if data is not None:
 else:
     print("Failed to read data.")
     
-############################################ HEART DISEASEOR ATTACK PREDICTION #########################################
+############################################ heart disease or ATTACK PREDICTION #########################################
 
 
 ######################################## COST AND LOSS FUNCTIONS #######################################################
