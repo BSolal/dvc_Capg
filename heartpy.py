@@ -24,6 +24,7 @@ from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, r
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
 import dvc.api
+import sys
 
 
 ####################################################### DVC PARAMS #############################################################
@@ -45,6 +46,8 @@ def read_data(file_path):
 
 
 excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
+#excel_path = "C:/Users/sbittoun/Documents/main_fold/creditcard.csv"
+
 data = pd.read_csv(excel_path)
 
 
@@ -57,27 +60,32 @@ if data is not None:
         
         X = data.drop("HeartDiseaseorAttack", axis=1)  # Features
         y = data["HeartDiseaseorAttack"]  # Target column
+        '''
+        X = data.drop("class", axis=1)  # Features
+        y = data["class"]  # Target column
+        '''
 
         train_X, test_X, train_y, test_y = train_test_split(X, y, test_size=params_test_size, random_state=42)
 
-
+        
         # Random forest training
         model = RandomForestClassifier(n_estimators=params_n_estim)        
         model.fit(train_X, train_y)
         predictions = model.predict(test_X)
-
+        '''
         #print(train_y, "\n\n")
         print(test_y, "\n\n")
         print(test_X,"\n\n")
         print(predictions,"\n\n")
-
+        '''
         
 else:
     print("Failed to read data.")
+
     
 ############################################ heart disease or ATTACK PREDICTION #########################################
 
-
+'''
 ######################################## COST AND LOSS FUNCTIONS #######################################################
 
 # Calculer la fonction de coût (cost function) - log loss
@@ -90,8 +98,8 @@ loss = mean_absolute_error(test_y, predictions)
 print("Cost function:", cost)
 print("Loss function:", loss)
 ######################################## COST AND LOSS FUNCTIONS #######################################################
-
-
+'''
+'''
 
 ############################################### CONFUSION MATRIX AND METRICS ###########################################
 # Create the confusion matrix
@@ -109,33 +117,40 @@ sns.heatmap(cm_df, annot=True, fmt='d', cmap='Blues')
 plt.title('Confusion Matrix')
 plt.xlabel('Predicted Class')
 plt.ylabel('Actual Class')
+'''
+
 
 # Calculate precision
+precision_train = precision_score(train_y, model.predict(train_X))
 precision = precision_score(test_y, predictions)
 
 # Calculate recall
+recall_train = recall_score(train_y, model.predict(train_X))
 recall = recall_score(test_y, predictions)
 
 #Calculate Accuracy
+accuracy_train = accuracy_score(train_y, model.predict(train_X))
 accuracy = accuracy_score(test_y, predictions)
 
 #Calculate f1_score
+f1_train = f1_score(train_y, model.predict(train_X))
 f1 = f1_score(test_y,predictions)
 
 #Calculate ROC_AUC
+roc_auc_train = roc_auc_score(train_y, model.predict(train_X))
 roc_auc = roc_auc_score(test_y, predictions)
 
-print("Precision: ", precision)
-print("Recall: ", recall)
-print("Accuracy", accuracy)
-print("F1", f1)
-print("ROC_AUC",roc_auc )
+print("\nPrecision_train:", precision_train,"\t\tPrecision_test:\t",precision,"\t\tPrecision_diff:\t",precision_train-precision)
+print("Recall_train:\t", recall_train,"\t\tRecall_test:\t",recall,"\t\tRecall_diff:\t",recall_train-recall)
+print("Accuracy_train:\t",accuracy_train,"\t\tAccuracy_test\t" ,accuracy,"\t\tAccuracy_diff:\t",accuracy_train-accuracy)
+print("F1_train:\t",f1_train,"\t\tF1_test:\t" ,f1,"\t\tF1_diff:\t",f1_train-f1)
+print("ROC_AUC_train:\t",roc_auc_train,"\t\tROC_AUC_test:\t" ,roc_auc,"\t\tROC_AUC_diff:\t",roc_auc_train-roc_auc,"\n" )
 
 
 ############################################### CONFUSION MATRIX AND METRICS #############################################
 
 
-
+'''
 
 ################################################## PLOTS ####################################################################
 # Plot the actual values with a specific color
@@ -156,8 +171,8 @@ end_index = 2500
 
 # Limit the x-axis to the specified portion
 plt.xlim(start_index, end_index)
-#plt.show()
-
+plt.show()
+'''
 ###################################################################################################################################################
 
 ############################################## DVC LOG_METRICS ####################################################################################
@@ -168,7 +183,6 @@ with Live() as live:
     live.log_metric("f1_score", f1)
     live.log_metric("roc_auc", roc_auc)
 ############################################## DVC LOG_METRICS ####################################################################################
-
 
 
 ########################################### SAVE METRICS ##########################################################################################
@@ -198,15 +212,16 @@ with open('scores.csv', 'a', newline='') as file:
 
 with open('modeli.pkl', 'wb') as file:
     pickle.dump(model, file)
-
+'''
 # Load the model from the file
 with open('modeli.pkl', 'rb') as file:
     loaded_model = pickle.load(file)
 
+print(loaded_model)
+print(type(loaded_model))
+sys.exit()
 #################################### PREDICTIONS WITH ANOTHER MODEL ############################################
 ################################################################################################################
-
-'''
 
 new_excel_path = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv"
 new_data = pd.read_csv(new_excel_path)
