@@ -18,7 +18,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from dvclive import Live
 # Modelling
-from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay
+from sklearn.metrics import accuracy_score, confusion_matrix, precision_score, recall_score, ConfusionMatrixDisplay, roc_auc_score, f1_score
 from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
 import yaml
@@ -117,9 +117,9 @@ def main():
                 mlflow.sklearn.save_model(model, folder_path2)
             '''
             
-            print(test_y, "\n\n")
-            print(test_X,"\n\n")
-            print(predictions,"\n\n")
+            #print(test_y, "\n\n")
+            #print(test_X,"\n\n")
+            #print(predictions,"\n\n")
             
     else:
         print("Failed to read data.")
@@ -131,7 +131,7 @@ def main():
 
     #######################################################################################################################
     ######################################## COST AND LOSS FUNCTIONS ######################################################
-
+    '''
     # (cost function) - log loss
     cost = log_loss(test_y, predictions, labels=np.unique(test_y))
 
@@ -141,6 +141,7 @@ def main():
     # Afficher les valeurs de la fonction de coût et de la fonction de perte
     print("Cost function:", cost)
     print("Loss function:", loss)
+    '''
     ######################################## COST AND LOSS FUNCTIONS ######################################################
     #######################################################################################################################
 
@@ -165,18 +166,33 @@ def main():
     mlflow.log_artifact("confusion_matrix.png")
 
 
+
     # Calculate precision
+    precision_train = precision_score(train_y, model.predict(train_X))
     precision = precision_score(test_y, predictions)
 
     # Calculate recall
+    recall_train = recall_score(train_y, model.predict(train_X))
     recall = recall_score(test_y, predictions)
 
-    # Calculate accuracy
+    #Calculate Accuracy
+    accuracy_train = accuracy_score(train_y, model.predict(train_X))
     accuracy = accuracy_score(test_y, predictions)
 
-    print("Precision: ", precision)
-    print("Recall: ", recall)
-    print("Accuracy", accuracy,"\n")
+    #Calculate f1_score
+    f1_train = f1_score(train_y, model.predict(train_X))
+    f1 = f1_score(test_y,predictions)
+
+    #Calculate ROC_AUC
+    roc_auc_train = roc_auc_score(train_y, model.predict(train_X))
+    roc_auc = roc_auc_score(test_y, predictions)
+
+    print("\nPrecision_train:", precision_train,"\t\tPrecision_test:\t",precision,"\t\tPrecision_diff:\t",precision_train-precision)
+    print("Recall_train:\t", recall_train,"\t\tRecall_test:\t",recall,"\t\tRecall_diff:\t",recall_train-recall)
+    print("Accuracy_train:\t",accuracy_train,"\t\tAccuracy_test\t" ,accuracy,"\t\tAccuracy_diff:\t",accuracy_train-accuracy)
+    print("F1_train:\t",f1_train,"\t\tF1_test:\t" ,f1,"\t\tF1_diff:\t",f1_train-f1)
+    print("ROC_AUC_train:\t",roc_auc_train,"\t\tROC_AUC_test:\t" ,roc_auc,"\t\tROC_AUC_diff:\t",roc_auc_train-roc_auc,"\n" )
+
 
     ###################################### CONFUSION MATRIX, PRECISION, RECALL ############################################
     #######################################################################################################################
@@ -197,7 +213,8 @@ def main():
     mlflow.log_param("test_size", params_test_size)
     mlflow.log_param("n_estimators", estims)
     mlflow.log_param("target",target_name)
-    #mlflow.sklearn.log_model(model, "model") #model logging
+    mlflow.log_metric("f1_score",f1)
+    mlflow.log_metric("roc_auc",roc_auc)
 
     ################################################ MLFLOW METRICS #######################################################
     #######################################################################################################################
@@ -226,7 +243,7 @@ def main():
 
     # Limit the x-axis to the specified portion
     plt.xlim(start_index, end_index)
-    plt.show()
+    #plt.show()
 
     #######################################################################################################################
     #######################################################################################################################

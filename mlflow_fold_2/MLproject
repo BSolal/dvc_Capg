@@ -3,10 +3,14 @@ conda_env: conda.yaml
 entry_points:
   main:
     parameters:
-      data_path: {type: string, default: 'C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv'}
-      n_estimators: {type: int, default: 8}
+      data_path: {type: string, default: 'C:/Users/sbittoun/Documents/main_fold/creditcard.csv'}
+      n_estimators: {type: int, default: 3}
       test_size: {type: float, default: 0.3}
-      target: {type: string, default: 'HeartDiseaseorAttack'}
-      experiment_name: {type: string, default: 'Heart_with_time'}
-      run_name: {type: string, default: 'essai_model_12'}
+      target: {type: string, default: 'class'}
+      experiment_name: {type: string, default: 'Fraud'}
+      run_name: {type: string, default: 'model_3'}
     command: "python train.py {data_path} {n_estimators} {test_size} {target} {experiment_name} {run_name}"
+
+
+
+    
