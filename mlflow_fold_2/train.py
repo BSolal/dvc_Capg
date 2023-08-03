@@ -249,11 +249,11 @@ def main():
     #######################################################################################################################
     #######################################################################################################################
 
-
-    mlflow.sklearn.log_model(model, "random_forest_model") 
-    mlflow.sklearn.save_model(model,"RF")
-    #model_uri = f"runs:/{mlflow.active_run().info.run_id}/credit_card_model"
-    #model_version = mlflow.register_model(model_uri, "Credit_card_RF")
+    model_name = mlproject_config['entry_points']['main']['parameters']['model_name']['default']
+    mlflow.sklearn.log_model(model, model_name) 
+    #mlflow.sklearn.save_model(model,"RF")
+    model_uri = f"runs:/{mlflow.active_run().info.run_id}/heart_attack"
+    model_version = mlflow.register_model(model_uri, model_name)
 
 
 
