@@ -4,7 +4,7 @@ entry_points:
   main:
     parameters:
       data_path: {type: string, default: 'C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart2.csv'}
-      n_estimators: {type: int, default: 1}
+      n_estimators: {type: int, default: 20}
       test_size: {type: float, default: 0.3}
       target: {type: string, default: 'HeartDiseaseorAttack'}
       experiment_name: {type: string, default: 'HeartDiseaseorAttack'}
