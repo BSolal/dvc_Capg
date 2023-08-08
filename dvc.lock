@@ -22,13 +22,13 @@ stages:
     outs:
     - path: modeli.pkl
       hash: md5
-      md5: 76c92f48babaab694abdc8cf20da62ff
-      size: 15339524
+      md5: e470b064d7098841d19f24dadf217a8f
+      size: 15303044
     - path: scores.csv
       hash: md5
-      md5: 2b7c92f537d54f8f14805a49971a822a
+      md5: 656eb680217372a21a6a0777f2274903
       size: 155
     - path: scores.json
       hash: md5
-      md5: c5eda153cecf5e98dc31ccf68da972f3
+      md5: 8a61408769a7972134627c6809fc2c50
       size: 173

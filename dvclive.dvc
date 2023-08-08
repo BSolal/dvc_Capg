@@ -1,6 +1,6 @@
 outs:
-- md5: 4da731210ba9e2ac22c08c3dcb098234.dir
-  size: 10711
+- md5: 238bbccca2cb0c2974d37f6f7abe6d67.dir
+  size: 10708
   nfiles: 8
   hash: md5
   path: dvclive
