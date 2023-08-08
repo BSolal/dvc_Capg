@@ -177,12 +177,14 @@ plt.show()
 ###################################################################################################################################################
 
 ############################################## DVC LOG_METRICS ####################################################################################
+'''
 with Live() as live:
     live.log_metric("recall", recall)
     live.log_metric("precision", precision)
     live.log_metric("accuracy", accuracy)
     live.log_metric("f1_score", f1)
     live.log_metric("roc_auc", roc_auc)
+'''
 ############################################## DVC LOG_METRICS ####################################################################################
 
 ########################################### SAVE METRICS ##########################################################################################
@@ -215,9 +217,10 @@ data2 = pd.read_csv(excel_path)
 with open('modeli.pkl', 'wb') as file:
     pickle.dump(model, file)
 
-print('/n########################################/n')
+
+print('\n########################################\n')
 mlem.api.save(model,"save_model")
-mlem.api.apply(model,data,method='predict')
+#mlem.api.apply(model,data,method='predict')
 
 '''
 # Load the model from the file
