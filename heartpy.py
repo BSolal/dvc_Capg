@@ -25,6 +25,7 @@ from sklearn.model_selection import RandomizedSearchCV, train_test_split
 from scipy.stats import randint
 import dvc.api
 import sys
+import mlem.api
 
 
 ####################################################### DVC PARAMS #############################################################
@@ -32,7 +33,7 @@ params = dvc.api.params_show()
 params_test_size = params['test_size']
 params_n_estim = params['n_estimators']
 ####################################################### DVC PARAMS #############################################################
-save_dvc_exp=True 
+#save_dvc_exp=True 
 
 '''
 def read_data(file_path):
@@ -183,7 +184,7 @@ with Live() as live:
     live.log_metric("f1_score", f1)
     live.log_metric("roc_auc", roc_auc)
 ############################################## DVC LOG_METRICS ####################################################################################
-
+    mlem.api.save(model,"save_model")
 
 ########################################### SAVE METRICS ##########################################################################################
 
