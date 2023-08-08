@@ -184,7 +184,6 @@ with Live() as live:
     live.log_metric("f1_score", f1)
     live.log_metric("roc_auc", roc_auc)
 ############################################## DVC LOG_METRICS ####################################################################################
-    mlem.api.save(model,"save_model")
 
 ########################################### SAVE METRICS ##########################################################################################
 
@@ -209,10 +208,17 @@ with open('scores.csv', 'a', newline='') as file:
 ###################################################################################################################################################
 
 ################################################ MODEL ############################################################################################
+excel_path2 = "C:/Users/sbittoun/Documents/main_fold/dvc_fold_2/heart3.csv"
+data2 = pd.read_csv(excel_path)
 
 
 with open('modeli.pkl', 'wb') as file:
     pickle.dump(model, file)
+
+print('/n########################################/n')
+mlem.api.save(model,"save_model")
+mlem.api.apply(model,data,method='predict')
+
 '''
 # Load the model from the file
 with open('modeli.pkl', 'rb') as file:
