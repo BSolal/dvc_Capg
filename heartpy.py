@@ -174,7 +174,7 @@ with Live() as live:
     live.log_metric("accuracy", accuracy)
     live.log_metric("f1_score", f1)
     live.log_metric("roc_auc", roc_auc)
-    live.log_image("confusion matrix",cm_df)
+
 
 ############################################## DVC LOG_METRICS ####################################################################################
 

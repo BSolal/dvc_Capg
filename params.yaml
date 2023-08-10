@@ -1,2 +1,2 @@
 test_size: 0.3
-n_estimators: 2
+n_estimators: 60
