@@ -26,6 +26,7 @@ from scipy.stats import randint
 import dvc.api
 import sys
 import mlem.api
+import os
 
 
 ####################################################### DVC PARAMS #############################################################
@@ -33,7 +34,7 @@ params = dvc.api.params_show()
 params_test_size = params['test_size']
 params_n_estim = params['n_estimators']
 ####################################################### DVC PARAMS #############################################################
-#save_dvc_exp=True 
+save_dvc_exp=True 
 
 '''
 def read_data(file_path):
@@ -219,7 +220,11 @@ with open('modeli.pkl', 'wb') as file:
 
 
 print('\n########################################\n')
-mlem.api.save(model,"save_model")
+metrics=dvc.api.metrics_show()
+print("\ndvc.api.live :,",metrics,"\n")
+mlem.api.save(model,"saved_model")
+out_path = os.path.join(os.getcwd(), "saved_model")
+loaded = mlem.api.load(out_path)
 #mlem.api.apply(model,data,method='predict')
 
 '''

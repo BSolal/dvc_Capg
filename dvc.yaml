@@ -1,6 +1,6 @@
 stages:
   NewStageMetrics:
-    cmd: python heartpy.py 
+    cmd: python heartpy.py     
     deps:
     - heart2.csv
     - heartpy.py
