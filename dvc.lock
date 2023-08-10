@@ -13,22 +13,22 @@ stages:
       size: 9764
     - path: params.yaml
       hash: md5
-      md5: fab456e47125fa5bab31bb124ca63fdd
-      size: 32
+      md5: d5fba97de05dd49402decd9ec798dbb8
+      size: 31
     params:
       params.yaml:
-        n_estimators: 60
+        n_estimators: 2
         test_size: 0.3
     outs:
     - path: modeli.pkl
       hash: md5
-      md5: 87c59c901b67992be961fd763453a2de
-      size: 460870068
+      md5: 4f2024d356cc1bede3de6078852101dc
+      size: 15384324
     - path: scores.csv
       hash: md5
-      md5: 890910fb9bd169e34760b914a589d3fb
-      size: 1228
+      md5: 774745f72a1a4ecb334e16ebec74439c
+      size: 154
     - path: scores.json
       hash: md5
-      md5: f40150f2aab25977505172b8c3077745
-      size: 173
+      md5: 9b354e6c4bdb76a616c98853d9dffde8
+      size: 172
