@@ -16,4 +16,4 @@ stages:
     - scores.json:
         cache: false
     outs:
-    - modeli.pkl
+    - modeli.pkl 
