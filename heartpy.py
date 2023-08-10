@@ -87,21 +87,9 @@ else:
     
 ############################################ heart disease or ATTACK PREDICTION #########################################
 
-'''
-######################################## COST AND LOSS FUNCTIONS #######################################################
+#################################### COST AND LOSS FUNCTIONS #######################################################
 
-# Calculer la fonction de coût (cost function) - log loss
-cost = log_loss(test_y, predictions, labels=np.unique(test_y))
 
-# Calculer la fonction de perte (loss function) - mean absolute error
-loss = mean_absolute_error(test_y, predictions)
-
-# Afficher les valeurs de la fonction de coût et de la fonction de perte
-print("Cost function:", cost)
-print("Loss function:", loss)
-######################################## COST AND LOSS FUNCTIONS #######################################################
-'''
-'''
 
 ############################################### CONFUSION MATRIX AND METRICS ###########################################
 # Create the confusion matrix
@@ -119,7 +107,7 @@ sns.heatmap(cm_df, annot=True, fmt='d', cmap='Blues')
 plt.title('Confusion Matrix')
 plt.xlabel('Predicted Class')
 plt.ylabel('Actual Class')
-'''
+
 
 
 # Calculate precision
@@ -179,12 +167,14 @@ plt.show()
 
 ############################################## DVC LOG_METRICS ####################################################################################
 
+######################## DOESN'T WORK BECAUSE AN ISSUE WITH THE LINK BETWEEN STUDIO AND THE GIT REPOSITORY ########################################
 with Live() as live:
     live.log_metric("recall", recall)
     live.log_metric("precision", precision)
     live.log_metric("accuracy", accuracy)
     live.log_metric("f1_score", f1)
     live.log_metric("roc_auc", roc_auc)
+    live.log_image("confusion matrix",cm_df)
 
 ############################################## DVC LOG_METRICS ####################################################################################
 
@@ -218,13 +208,19 @@ data2 = pd.read_csv(excel_path)
 with open('modeli.pkl', 'wb') as file:
     pickle.dump(model, file)
 
-
+########################################## LOAD THE METRICS AND PRINT THEM #######################################3########
 print('\n########################################\n')
 metrics=dvc.api.metrics_show()
 print("\ndvc.api.live :,",metrics,"\n")
-mlem.api.save(model,"saved_model")
+
+################################################### SAVE THE SPECIFIED MODEL ##########################################
+mlem.api.save(model,"RF",sample_data=train_X)
+
+#################################### LOADS A MODEL ALREADY EXISTING ################################################
 out_path = os.path.join(os.getcwd(), "saved_model")
 loaded = mlem.api.load(out_path)
+
+############################ APPLY  THE MODEL TO A SPECIFIED DATSET ####################################################
 #mlem.api.apply(model,data,method='predict')
 
 '''
